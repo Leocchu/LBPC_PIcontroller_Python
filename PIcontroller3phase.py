@@ -88,7 +88,7 @@ def PIcontrol(Vang_meas, Vmag_meas, Pact, Qact, Vmag_targ, Vang_targ):
     phasor_error_mag = Vmag_targ - Vmag_meas
 
     # Checking for P saturation (anti-windup control)
-    indexP = np.where(Pact < store_Pcmd("read", Vang_meas))[0]
+    indexP = np.where(abs(Pact) < abs(store_Pcmd("read", Vang_meas)))[0]
     sat_arrayP = np.ones((np.size(Vang_meas), 1))
     for i in indexP:
         sat_arrayP[i] = 0
@@ -99,7 +99,7 @@ def PIcontrol(Vang_meas, Vmag_meas, Pact, Qact, Vmag_targ, Vang_targ):
         Pmax[i] = Pact[i]
 
     # Checking for Q saturation (anti-windup control)
-    indexQ = np.where(Qact < store_Qcmd("read", Vmag_meas))[0]
+    indexQ = np.where(abs(Qact) < abs(store_Qcmd("read", Vmag_meas)))[0]
     sat_arrayQ = np.ones((np.size(Vmag_meas), 1))
     for i in indexQ:
         sat_arrayQ[i] = 0
